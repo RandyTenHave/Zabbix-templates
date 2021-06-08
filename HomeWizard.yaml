@@ -1,0 +1,257 @@
+zabbix_export:
+  version: '5.4'
+  date: '2021-06-08T14:23:19Z'
+  groups:
+    -
+      uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    -
+      uuid: 8b14921c0c6643bfa7e838a582b999e1
+      template: 'HomeWizard Wifi P1 Meter'
+      name: 'HomeWizard Wifi P1 Meter'
+      description: 'Read and graph the HomeWizard P1 Wifi meter via the local API and graph the results of your utility meter.'
+      groups:
+        -
+          name: Templates
+      items:
+        -
+          uuid: 5a0d87dbebd645268f2110bd1cfa0030
+          name: 'Active power (L1)'
+          type: DEPENDENT
+          key: homewizard.p1.active_power_l1_w
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.active_power_l1_w
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: 6052140b166b4bb4893b70c2609e6755
+          name: 'Active power (L2)'
+          type: DEPENDENT
+          key: homewizard.p1.active_power_l2_w
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.active_power_l2_w
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: e5cbff733391419aa7cc8345882891cb
+          name: 'Active power (L3)'
+          type: DEPENDENT
+          key: homewizard.p1.active_power_l3_w
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.active_power_l3_w
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: a392bc5c41f64b1fa01fb089d87a3591
+          name: 'Active power (Total)'
+          type: DEPENDENT
+          key: homewizard.p1.active_power_w
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.active_power_w
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: 9c4184ccf2d74c6cbdd555e4cb38fcc7
+          name: 'Collect JSON data'
+          type: HTTP_AGENT
+          key: homewizard.p1.data
+          history: '0'
+          trends: '0'
+          value_type: TEXT
+          url: 'http://{HOST.CONN}/api/v1/data'
+        -
+          uuid: a14e42643ce048108d87879204a8dbd6
+          name: 'Meter model'
+          type: DEPENDENT
+          key: homewizard.p1.meter_model
+          delay: '0'
+          history: 1d
+          trends: '0'
+          value_type: TEXT
+          inventory_link: OS_FULL
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.meter_model
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: 916dec5fab5a499d836d3e92b42355a3
+          name: 'Collect RAW data'
+          type: HTTP_AGENT
+          key: homewizard.p1.raw
+          history: '0'
+          trends: '0'
+          status: DISABLED
+          value_type: TEXT
+          url: 'http://{HOST.CONN}/api/v1/telegram'
+        -
+          uuid: 25bc664ee4e1424eae1f7b3d369dda52
+          name: 'SMR version'
+          type: DEPENDENT
+          key: homewizard.p1.smr_version
+          delay: '0'
+          history: 1d
+          trends: '0'
+          inventory_link: HARDWARE
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.smr_version
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: 81104b5c02674cbc8d28f6416e5ef127
+          name: 'Gas counter'
+          type: DEPENDENT
+          key: homewizard.p1.total_gas_m3
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.total_gas_m3
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: a46b6ac11db547c1be6db317b2ff50ce
+          name: 'T1 counter (export)'
+          type: DEPENDENT
+          key: homewizard.p1.total_power_export_t1_kwh
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.total_power_export_t1_kwh
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: 21924eba8b374aa4903f4e417516cc49
+          name: 'T2 counter (export)'
+          type: DEPENDENT
+          key: homewizard.p1.total_power_export_t2_kwh
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.total_power_export_t2_kwh
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: a623e61350f34a8288cd6137843f79ae
+          name: 'T1 counter'
+          type: DEPENDENT
+          key: homewizard.p1.total_power_import_t1_kwh
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.total_power_import_t1_kwh
+          master_item:
+            key: homewizard.p1.data
+        -
+          uuid: e7a027acfae644dca63b8f37bd170cf5
+          name: 'T2 counter'
+          type: DEPENDENT
+          key: homewizard.p1.total_power_import_t2_kwh
+          delay: '0'
+          value_type: FLOAT
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.total_power_import_t2_kwh
+          master_item:
+            key: homewizard.p1.data
+      httptests:
+        -
+          uuid: 77ba213651d64d869681c378ca8d09db
+          name: 'HTTP test'
+          attempts: '3'
+          steps:
+            -
+              name: 'HTTP test'
+              url: 'http://{HOST.CONN}/api'
+              required: firmware_version
+              status_codes: '200'
+      macros:
+        -
+          macro: '{$HOMEWIZARD_PHASE_LIMIT}'
+          value: '5750'
+          description: '25 Amps per phase'
+        -
+          macro: '{$HOMEWIZARD_TOTAL_LIMIT}'
+          value: '17250'
+          description: '3x 25 Amps'
+  graphs:
+    -
+      uuid: 6e371d0fcf3b4643b4cee2f061ea6b93
+      name: 'HTTP API response time'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          item:
+            host: 'HomeWizard Wifi P1 Meter'
+            key: 'web.test.time[HTTP test,HTTP test,resp]'
+    -
+      uuid: 8e9596a7355a47719b930da436dbc23a
+      name: 'Total Power'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      type: STACKED
+      graph_items:
+        -
+          sortorder: '1'
+          color: FFCDD2
+          item:
+            host: 'HomeWizard Wifi P1 Meter'
+            key: homewizard.p1.active_power_l1_w
+        -
+          sortorder: '2'
+          color: EF9A9A
+          item:
+            host: 'HomeWizard Wifi P1 Meter'
+            key: homewizard.p1.active_power_l2_w
+        -
+          sortorder: '3'
+          color: E57373
+          item:
+            host: 'HomeWizard Wifi P1 Meter'
+            key: homewizard.p1.active_power_l3_w
+        -
+          sortorder: '4'
+          color: 4000FF
+          item:
+            host: 'HomeWizard Wifi P1 Meter'
+            key: homewizard.p1.active_power_w
