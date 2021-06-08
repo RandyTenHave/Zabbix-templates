@@ -29,5 +29,5 @@ If everything is working you should be able to see data flowing in the Monitorin
 
 # Todo (Future additions)
 
-## Trigger with the maximum utility limit 
-## Plot the voltages of each phase using the RAW API data. 
+* Trigger with the maximum utility limit 
+* Plot the voltages of each phase using the RAW API data. 
