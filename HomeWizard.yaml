@@ -1,6 +1,6 @@
 zabbix_export:
   version: '5.4'
-  date: '2021-06-08T14:23:19Z'
+  date: '2021-06-18T12:52:45Z'
   groups:
     -
       uuid: 7df96b18c230490a9a0a9e2307226338
@@ -29,6 +29,12 @@ zabbix_export:
                 - $.active_power_l1_w
           master_item:
             key: homewizard.p1.data
+          triggers:
+            -
+              uuid: d2490a31a53a4e2bb906b2ddb351cc8e
+              expression: 'last(/HomeWizard Wifi P1 Meter/homewizard.p1.active_power_l1_w)>{$HOMEWIZARD_PHASE_LIMIT}'
+              name: 'Phase 1 overloaded!'
+              priority: HIGH
         -
           uuid: 6052140b166b4bb4893b70c2609e6755
           name: 'Active power (L2)'
@@ -43,6 +49,12 @@ zabbix_export:
                 - $.active_power_l2_w
           master_item:
             key: homewizard.p1.data
+          triggers:
+            -
+              uuid: b84b2b3ce35f4e9b89d6e350be529634
+              expression: 'last(/HomeWizard Wifi P1 Meter/homewizard.p1.active_power_l2_w)>{$HOMEWIZARD_PHASE_LIMIT}'
+              name: 'Phase 2 overloaded!'
+              priority: HIGH
         -
           uuid: e5cbff733391419aa7cc8345882891cb
           name: 'Active power (L3)'
@@ -57,6 +69,12 @@ zabbix_export:
                 - $.active_power_l3_w
           master_item:
             key: homewizard.p1.data
+          triggers:
+            -
+              uuid: 48adc8185c4541849ba7c8e17416ef92
+              expression: 'last(/HomeWizard Wifi P1 Meter/homewizard.p1.active_power_l3_w)>{$HOMEWIZARD_PHASE_LIMIT}'
+              name: 'Phase 3 overloaded!'
+              priority: HIGH
         -
           uuid: a392bc5c41f64b1fa01fb089d87a3591
           name: 'Active power (Total)'
@@ -71,6 +89,12 @@ zabbix_export:
                 - $.active_power_w
           master_item:
             key: homewizard.p1.data
+          triggers:
+            -
+              uuid: f2ee1bb218c14617b2ea538b1277cadd
+              expression: 'last(/HomeWizard Wifi P1 Meter/homewizard.p1.active_power_w)>{$HOMEWIZARD_TOTAL_LIMIT}'
+              name: 'System overloaded!'
+              priority: HIGH
         -
           uuid: 9c4184ccf2d74c6cbdd555e4cb38fcc7
           name: 'Collect JSON data'
@@ -207,16 +231,16 @@ zabbix_export:
       macros:
         -
           macro: '{$HOMEWIZARD_PHASE_LIMIT}'
-          value: '5750'
+          value: '5700'
           description: '25 Amps per phase'
         -
           macro: '{$HOMEWIZARD_TOTAL_LIMIT}'
-          value: '17250'
+          value: '17000'
           description: '3x 25 Amps'
   graphs:
     -
-      uuid: 6e371d0fcf3b4643b4cee2f061ea6b93
-      name: 'HTTP API response time'
+      uuid: 21f9a9c0a28f45abbbf296430a6429e9
+      name: 'API Response time'
       graph_items:
         -
           sortorder: '1'
@@ -228,30 +252,32 @@ zabbix_export:
       uuid: 8e9596a7355a47719b930da436dbc23a
       name: 'Total Power'
       show_work_period: 'NO'
-      show_triggers: 'NO'
-      type: STACKED
       graph_items:
         -
           sortorder: '1'
           color: FFCDD2
+          calc_fnc: MAX
           item:
             host: 'HomeWizard Wifi P1 Meter'
             key: homewizard.p1.active_power_l1_w
         -
           sortorder: '2'
           color: EF9A9A
+          calc_fnc: MAX
           item:
             host: 'HomeWizard Wifi P1 Meter'
             key: homewizard.p1.active_power_l2_w
         -
           sortorder: '3'
           color: E57373
+          calc_fnc: MAX
           item:
             host: 'HomeWizard Wifi P1 Meter'
             key: homewizard.p1.active_power_l3_w
         -
           sortorder: '4'
           color: 4000FF
+          calc_fnc: MAX
           item:
             host: 'HomeWizard Wifi P1 Meter'
             key: homewizard.p1.active_power_w
